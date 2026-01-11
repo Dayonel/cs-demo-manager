@@ -240,6 +240,7 @@ export class VideoCommand extends Command {
           outputParameters: this.ffmpegOutputParameters ?? settings.video.ffmpegSettings.outputParameters,
         },
         onGameStart: () => {
+          console.log('Using Dayonel/cs-demo-manager');
           console.log('Recording in progress...');
         },
         onMoveFilesStart: () => {
@@ -330,8 +331,32 @@ export class VideoCommand extends Command {
       } else {
         const player = this.focusPlayerSteamId ? await fetchPlayer(this.focusPlayerSteamId) : undefined;
         parameters.sequences = [
+          // Prepend Sequence 1: Tick 0 to 320 to force game reset/load
           {
             number: 1,
+            startTick: 0,
+            endTick: 320,
+            showXRay: this.showXRay ?? settings.video.showXRay,
+            showAssists: this.showAssists ?? settings.video.showAssists,
+            showOnlyDeathNotices: this.showOnlyDeathNotices ?? settings.video.showOnlyDeathNotices,
+            playersOptions: [],
+            cameras: [],
+            recordAudio: this.recordAudio ?? settings.video.recordAudio,
+            playerCameras: player
+              ? [
+                  {
+                    tick: 0,
+                    playerSteamId: player.steamId,
+                    playerName: player.name,
+                  },
+                ]
+              : [],
+            playerVoicesEnabled: this.playerVoices ?? settings.video.playerVoicesEnabled,
+            deathNoticesDuration: this.deathNoticesDuration ?? settings.video.deathNoticesDuration,
+            cfg: this.cfg,
+          },
+          {
+            number: 2, // Changed from 1 to 2
             startTick: this.startTick,
             endTick: this.endTick,
             showXRay: this.showXRay ?? settings.video.showXRay,
