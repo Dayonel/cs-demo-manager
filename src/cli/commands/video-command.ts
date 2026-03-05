@@ -27,7 +27,10 @@ import { fetchPlayer } from 'csdm/node/database/player/fetch-player';
 import type { FfmpegSettings } from 'csdm/node/settings/settings';
 import type { Sequence } from 'csdm/common/types/sequence';
 import { fetchMatchesByChecksums } from 'csdm/node/database/matches/fetch-matches-by-checksums';
-import { isValidPlayerSequenceEvent, PlayerSequenceEvent } from 'csdm/common/types/player-sequence-event';
+import {
+  isValidPlayerSequenceEvent,
+  PlayerSequenceEvent,
+} from 'csdm/common/types/player-sequence-event';
 import type { PlayerSequenceEvent as PlayerSequenceEventType } from 'csdm/common/types/player-sequence-event';
 import { isValidPerspective, Perspective } from 'csdm/common/types/perspective';
 import { Perspective as PerspectiveType } from 'csdm/common/types/perspective';
@@ -68,7 +71,8 @@ export class VideoCommand extends Command {
   private readonly widthFlag = 'width';
   private readonly heightFlag = 'height';
   private readonly closeGameAfterRecordingFlag = 'close-game-after-recording';
-  private readonly noCloseGameAfterRecordingFlag = 'no-close-game-after-recording';
+  private readonly noCloseGameAfterRecordingFlag =
+    'no-close-game-after-recording';
   private readonly concatenateSequencesFlag = 'concatenate-sequences';
   private readonly noConcatenateSequencesFlag = 'no-concatenate-sequences';
   private readonly outputFileNameFlag = 'output-file-name';
@@ -152,12 +156,16 @@ export class VideoCommand extends Command {
   public printHelp() {
     console.log(this.getDescription());
     console.log('');
-    console.log(`Usage: csdm ${VideoCommand.Name} <demoPath> <startTick> <endTick> [options]`);
+    console.log(
+      `Usage: csdm ${VideoCommand.Name} <demoPath> <startTick> <endTick> [options]`,
+    );
     console.log(
       `       csdm ${VideoCommand.Name} <demoPath> --mode ${Mode.Player} --steamids <id1,id2> --event <event> [options]`,
     );
     console.log('');
-    console.log('The demo must have been analyzed and be present in the database.');
+    console.log(
+      'The demo must have been analyzed and be present in the database.',
+    );
     console.log('');
     console.log('Options:');
     console.log(`  --${this.framerateFlag} <number>`);
@@ -168,15 +176,23 @@ export class VideoCommand extends Command {
     console.log(`  --${this.concatenateSequencesFlag}`);
     console.log(`  --${this.noConcatenateSequencesFlag}`);
     console.log(`  --${this.outputFileNameFlag} <string>`);
-    console.log(`  --${this.encoderSoftwareFlag} <string> (FFmpeg or VirtualDub)`);
+    console.log(
+      `  --${this.encoderSoftwareFlag} <string> (FFmpeg or VirtualDub)`,
+    );
     console.log(`  --${this.recordingSystemFlag} <string> (HLAE or CS)`);
-    console.log(`  --${this.recordingOutputFlag} <string> (video, images, or images-and-video)`);
-    console.log(`  --${this.ffmpegExecutablePathFlag} <string> (path to FFmpeg executable)`);
+    console.log(
+      `  --${this.recordingOutputFlag} <string> (video, images, or images-and-video)`,
+    );
+    console.log(
+      `  --${this.ffmpegExecutablePathFlag} <string> (path to FFmpeg executable)`,
+    );
     console.log(`  --${this.ffmpegCrfFlag} <number>`);
     console.log(`  --${this.ffmpegAudioBitrateFlag} <number>`);
     console.log(`  --${this.ffmpegVideoCodecFlag} <string>`);
     console.log(`  --${this.ffmpegAudioCodecFlag} <string>`);
-    console.log(`  --${this.ffmpegVideoContainerFlag} <string> (mp4, avi or mkv)`);
+    console.log(
+      `  --${this.ffmpegVideoContainerFlag} <string> (mp4, avi or mkv)`,
+    );
     console.log(`  --${this.ffmpegInputParametersFlag} <string>`);
     console.log(`  --${this.ffmpegOutputParametersFlag} <string>`);
     console.log(`  --${this.showXRayFlag}`);
@@ -195,16 +211,24 @@ export class VideoCommand extends Command {
     console.log(`  --${this.cfgFlag} <string>`);
     console.log(`  --${this.focusPlayerFlag} <steamId>`);
     console.log(`  --${this.configFileFlag} <path> (path to config JSON file)`);
-    console.log(`  --${this.outputFlag} <path> (output folder for generated videos)`);
+    console.log(
+      `  --${this.outputFlag} <path> (output folder for generated videos)`,
+    );
     console.log(`  --verbose`);
     console.log('');
     console.log(`Player mode options (when --mode ${Mode.Player}):`);
-    console.log(`  --${this.eventFlag} <string> (${Object.values(PlayerSequenceEvent).join('|')})`);
-    console.log(`  --${this.steamIdsFlag} <steamId1,steamId2,...> (comma-separated list of Steam IDs)`);
+    console.log(
+      `  --${this.eventFlag} <string> (${Object.values(PlayerSequenceEvent).join('|')})`,
+    );
+    console.log(
+      `  --${this.steamIdsFlag} <steamId1,steamId2,...> (comma-separated list of Steam IDs)`,
+    );
     console.log(
       `  --${this.perspectiveFlag} <string> (${Object.values(PerspectiveType).join('|')}, default: ${PerspectiveType.Player})`,
     );
-    console.log(`  --${this.roundsFlag} <number,number,...> (comma-separated list of round numbers to filter)`);
+    console.log(
+      `  --${this.roundsFlag} <number,number,...> (comma-separated list of round numbers to filter)`,
+    );
     console.log(
       `  --${this.startSecondsBeforeFlag} <number> (seconds before event to start sequence, default: ${this.startSecondsBefore})`,
     );
@@ -238,20 +262,36 @@ export class VideoCommand extends Command {
         framerate: this.framerate ?? settings.video.framerate,
         width: this.width ?? settings.video.width,
         height: this.height ?? settings.video.height,
-        closeGameAfterRecording: this.closeGameAfterRecording ?? settings.video.closeGameAfterRecording,
-        concatenateSequences: this.concatenateSequences ?? settings.video.concatenateSequences,
+        closeGameAfterRecording:
+          this.closeGameAfterRecording ??
+          settings.video.closeGameAfterRecording,
+        concatenateSequences:
+          this.concatenateSequences ?? settings.video.concatenateSequences,
         outputFileName: this.outputFileName ?? settings.video.outputFileName,
         trueView: this.trueView ?? settings.video.trueView,
         sequences: [],
         ffmpegSettings: {
-          customExecutableLocation: this.ffmpegExecutablePath ?? settings.video.ffmpegSettings.customExecutableLocation,
-          audioBitrate: this.ffmpegAudioBitrate ?? settings.video.ffmpegSettings.audioBitrate,
-          constantRateFactor: this.ffmpegCrf ?? settings.video.ffmpegSettings.constantRateFactor,
-          videoCodec: this.ffmpegVideoCodec ?? settings.video.ffmpegSettings.videoCodec,
-          audioCodec: this.ffmpegAudioCodec ?? settings.video.ffmpegSettings.audioCodec,
-          videoContainer: this.ffmpegVideoContainer ?? settings.video.ffmpegSettings.videoContainer,
-          inputParameters: this.ffmpegInputParameters ?? settings.video.ffmpegSettings.inputParameters,
-          outputParameters: this.ffmpegOutputParameters ?? settings.video.ffmpegSettings.outputParameters,
+          customExecutableLocation:
+            this.ffmpegExecutablePath ??
+            settings.video.ffmpegSettings.customExecutableLocation,
+          audioBitrate:
+            this.ffmpegAudioBitrate ??
+            settings.video.ffmpegSettings.audioBitrate,
+          constantRateFactor:
+            this.ffmpegCrf ?? settings.video.ffmpegSettings.constantRateFactor,
+          videoCodec:
+            this.ffmpegVideoCodec ?? settings.video.ffmpegSettings.videoCodec,
+          audioCodec:
+            this.ffmpegAudioCodec ?? settings.video.ffmpegSettings.audioCodec,
+          videoContainer:
+            this.ffmpegVideoContainer ??
+            settings.video.ffmpegSettings.videoContainer,
+          inputParameters:
+            this.ffmpegInputParameters ??
+            settings.video.ffmpegSettings.inputParameters,
+          outputParameters:
+            this.ffmpegOutputParameters ??
+            settings.video.ffmpegSettings.outputParameters,
         },
         onGameStart: () => {
           console.log('Recording in progress...');
@@ -278,24 +318,34 @@ export class VideoCommand extends Command {
           width: config.width ?? parameters.width,
           height: config.height ?? parameters.height,
           trueView: config.trueView ?? parameters.trueView,
-          closeGameAfterRecording: config.closeGameAfterRecording ?? parameters.closeGameAfterRecording,
-          concatenateSequences: config.concatenateSequences ?? parameters.concatenateSequences,
+          closeGameAfterRecording:
+            config.closeGameAfterRecording ??
+            parameters.closeGameAfterRecording,
+          concatenateSequences:
+            config.concatenateSequences ?? parameters.concatenateSequences,
           outputFileName: config.outputFileName ?? parameters.outputFileName,
           ffmpegSettings: config.ffmpegSettings ?? parameters.ffmpegSettings,
-          outputFolderPath: config.outputFolderPath ?? parameters.outputFolderPath,
+          outputFolderPath:
+            config.outputFolderPath ?? parameters.outputFolderPath,
           sequences: config.sequences ?? parameters.sequences,
         };
       } else if (this.mode === 'player') {
         if (this.steamIds.length === 0) {
-          throw new InvalidArgument(`--${this.steamIdsFlag} is required for player mode`);
+          throw new InvalidArgument(
+            `--${this.steamIdsFlag} is required for player mode`,
+          );
         }
         if (!this.event) {
-          throw new InvalidArgument(`--${this.eventFlag} is required for player mode`);
+          throw new InvalidArgument(
+            `--${this.eventFlag} is required for player mode`,
+          );
         }
 
         const [match] = await fetchMatchesByChecksums([demo.checksum]);
         if (!match) {
-          throw new Error('Match not found in database. Make sure the demo has been analyzed.');
+          throw new Error(
+            'Match not found in database. Make sure the demo has been analyzed.',
+          );
         }
 
         let sequences: Sequence[];
@@ -307,12 +357,17 @@ export class VideoCommand extends Command {
             startSecondsBeforeEvent: this.startSecondsBefore,
             endSecondsAfterEvent: this.endSecondsAfter,
             settings: {
-              showOnlyDeathNotices: this.showOnlyDeathNotices ?? settings.video.showOnlyDeathNotices,
+              showOnlyDeathNotices:
+                this.showOnlyDeathNotices ??
+                settings.video.showOnlyDeathNotices,
               showXRay: this.showXRay ?? settings.video.showXRay,
               showAssists: this.showAssists ?? settings.video.showAssists,
               recordAudio: this.recordAudio ?? settings.video.recordAudio,
-              playerVoicesEnabled: this.playerVoices ?? settings.video.playerVoicesEnabled,
-              deathNoticesDuration: this.deathNoticesDuration ?? settings.video.deathNoticesDuration,
+              playerVoicesEnabled:
+                this.playerVoices ?? settings.video.playerVoicesEnabled,
+              deathNoticesDuration:
+                this.deathNoticesDuration ??
+                settings.video.deathNoticesDuration,
             },
             firstSequenceNumber: 1,
           });
@@ -326,12 +381,17 @@ export class VideoCommand extends Command {
             startSecondsBeforeEvent: this.startSecondsBefore,
             endSecondsAfterEvent: this.endSecondsAfter,
             settings: {
-              showOnlyDeathNotices: this.showOnlyDeathNotices ?? settings.video.showOnlyDeathNotices,
+              showOnlyDeathNotices:
+                this.showOnlyDeathNotices ??
+                settings.video.showOnlyDeathNotices,
               showXRay: this.showXRay ?? settings.video.showXRay,
               showAssists: this.showAssists ?? settings.video.showAssists,
               recordAudio: this.recordAudio ?? settings.video.recordAudio,
-              playerVoicesEnabled: this.playerVoices ?? settings.video.playerVoicesEnabled,
-              deathNoticesDuration: this.deathNoticesDuration ?? settings.video.deathNoticesDuration,
+              playerVoicesEnabled:
+                this.playerVoices ?? settings.video.playerVoicesEnabled,
+              deathNoticesDuration:
+                this.deathNoticesDuration ??
+                settings.video.deathNoticesDuration,
             },
             weapons: [],
             firstSequenceNumber: 1,
@@ -339,21 +399,68 @@ export class VideoCommand extends Command {
         }
 
         if (sequences.length === 0) {
-          throw new Error('No sequences generated. Check that the players have matching events in the demo.');
+          throw new Error(
+            'No sequences generated. Check that the players have matching events in the demo.',
+          );
         }
 
         parameters.sequences = sequences;
       } else {
-        const player = this.focusPlayerSteamId ? await fetchPlayer(this.focusPlayerSteamId) : undefined;
+        const player = this.focusPlayerSteamId
+          ? await fetchPlayer(this.focusPlayerSteamId)
+          : undefined;
         parameters.sequences = [
           {
             number: 1,
+            startTick: 0,
+            endTick: 320,
+            showXRay: this.showXRay ?? settings.video.showXRay,
+            showAssists: this.showAssists ?? settings.video.showAssists,
+            showOnlyDeathNotices:
+              this.showOnlyDeathNotices ?? settings.video.showOnlyDeathNotices,
+            playersOptions: [
+              {
+                steamId: player?.steamId ?? '',
+                playerName: player?.name ?? '',
+                isVoiceEnabled: false,
+                highlightKill: true,
+                showKill: true,
+              },
+            ],
+            cameras: [],
+            recordAudio: this.recordAudio ?? settings.video.recordAudio,
+            playerCameras: player
+              ? [
+                  {
+                    tick: 0,
+                    playerSteamId: player.steamId,
+                    playerName: player.name,
+                  },
+                ]
+              : [],
+            playerVoicesEnabled:
+              this.playerVoices ?? settings.video.playerVoicesEnabled,
+            deathNoticesDuration:
+              this.deathNoticesDuration ?? settings.video.deathNoticesDuration,
+            cfg: this.cfg,
+          },
+          {
+            number: 2, // Changed from 1 to 2
             startTick: this.startTick,
             endTick: this.endTick,
             showXRay: this.showXRay ?? settings.video.showXRay,
             showAssists: this.showAssists ?? settings.video.showAssists,
-            showOnlyDeathNotices: this.showOnlyDeathNotices ?? settings.video.showOnlyDeathNotices,
-            playersOptions: [],
+            showOnlyDeathNotices:
+              this.showOnlyDeathNotices ?? settings.video.showOnlyDeathNotices,
+            playersOptions: [
+              {
+                steamId: player?.steamId ?? '',
+                playerName: player?.name ?? '',
+                isVoiceEnabled: false,
+                highlightKill: true,
+                showKill: true,
+              },
+            ],
             cameras: [],
             recordAudio: this.recordAudio ?? settings.video.recordAudio,
             playerCameras: player
@@ -365,28 +472,39 @@ export class VideoCommand extends Command {
                   },
                 ]
               : [],
-            playerVoicesEnabled: this.playerVoices ?? settings.video.playerVoicesEnabled,
-            deathNoticesDuration: this.deathNoticesDuration ?? settings.video.deathNoticesDuration,
+            playerVoicesEnabled:
+              this.playerVoices ?? settings.video.playerVoicesEnabled,
+            deathNoticesDuration:
+              this.deathNoticesDuration ?? settings.video.deathNoticesDuration,
             cfg: this.cfg,
           },
         ];
       }
 
-      if (parameters.recordingSystem === RecordingSystem.HLAE && !(await isHlaeInstalled())) {
+      if (
+        parameters.recordingSystem === RecordingSystem.HLAE &&
+        !(await isHlaeInstalled())
+      ) {
         console.log('Installing HLAE...');
         await installHlae();
       }
 
-      const shouldGenerateVideo = parameters.recordingOutput !== RecordingOutput.Images;
+      const shouldGenerateVideo =
+        parameters.recordingOutput !== RecordingOutput.Images;
       const { encoderSoftware } = parameters;
-      if (shouldGenerateVideo && encoderSoftware === EncoderSoftware.VirtualDub && !(await isVirtualDubInstalled())) {
+      if (
+        shouldGenerateVideo &&
+        encoderSoftware === EncoderSoftware.VirtualDub &&
+        !(await isVirtualDubInstalled())
+      ) {
         console.log('Installing VirtualDub...');
         await downloadAndExtractVirtualDub();
       }
 
       if (
         shouldGenerateVideo &&
-        (encoderSoftware === EncoderSoftware.FFmpeg || this.concatenateSequences) &&
+        (encoderSoftware === EncoderSoftware.FFmpeg ||
+          this.concatenateSequences) &&
         typeof this.ffmpegExecutablePath !== 'string' &&
         !(await isFfmpegInstalled())
       ) {
@@ -482,10 +600,18 @@ export class VideoCommand extends Command {
         this.demoPath = path.resolve(demoPath);
         return;
       } catch (error) {
-        if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
-          throw new Error(`Config file not found "${configFilePath}"`, { cause: error });
+        if (
+          error instanceof Error &&
+          'code' in error &&
+          error.code === 'ENOENT'
+        ) {
+          throw new Error(`Config file not found "${configFilePath}"`, {
+            cause: error,
+          });
         }
-        throw new Error('Failed to read or parse config file', { cause: error });
+        throw new Error('Failed to read or parse config file', {
+          cause: error,
+        });
       }
     }
 
@@ -508,7 +634,9 @@ export class VideoCommand extends Command {
 
       const steamIdsValue = values[this.steamIdsFlag];
       if (typeof steamIdsValue !== 'string') {
-        throw new InvalidArgument(`The --${this.steamIdsFlag} option is required for player mode`);
+        throw new InvalidArgument(
+          `The --${this.steamIdsFlag} option is required for player mode`,
+        );
       }
       this.steamIds = steamIdsValue.split(',').map((id) => id.trim());
       if (this.steamIds.length === 0) {
@@ -517,17 +645,23 @@ export class VideoCommand extends Command {
 
       const eventValue = values[this.eventFlag];
       if (typeof eventValue !== 'string') {
-        throw new InvalidArgument(`The --${this.eventFlag} option is required for player mode`);
+        throw new InvalidArgument(
+          `The --${this.eventFlag} option is required for player mode`,
+        );
       }
       if (!isValidPlayerSequenceEvent(eventValue)) {
-        throw new InvalidArgument(`Invalid event. Supported values: ${Object.values(PlayerSequenceEvent).join(', ')}`);
+        throw new InvalidArgument(
+          `Invalid event. Supported values: ${Object.values(PlayerSequenceEvent).join(', ')}`,
+        );
       }
       this.event = eventValue;
 
       const perspectiveValue = values[this.perspectiveFlag];
       if (typeof perspectiveValue === 'string') {
         if (!isValidPerspective(perspectiveValue)) {
-          throw new InvalidArgument(`Invalid perspective. Supported values: ${Object.values(Perspective).join(', ')}`);
+          throw new InvalidArgument(
+            `Invalid perspective. Supported values: ${Object.values(Perspective).join(', ')}`,
+          );
         }
         this.perspective = perspectiveValue;
       }
@@ -548,7 +682,9 @@ export class VideoCommand extends Command {
       if (typeof startSecondsBeforeValue === 'string') {
         const seconds = Number(startSecondsBeforeValue);
         if (Number.isNaN(seconds) || seconds < 0) {
-          throw new InvalidArgument('Start seconds before must be a non-negative number');
+          throw new InvalidArgument(
+            'Start seconds before must be a non-negative number',
+          );
         }
         this.startSecondsBefore = seconds;
       }
@@ -557,7 +693,9 @@ export class VideoCommand extends Command {
       if (typeof endSecondsAfterValue === 'string') {
         const seconds = Number(endSecondsAfterValue);
         if (Number.isNaN(seconds) || seconds < 0) {
-          throw new InvalidArgument('End seconds after must be a non-negative number');
+          throw new InvalidArgument(
+            'End seconds after must be a non-negative number',
+          );
         }
         this.endSecondsAfter = seconds;
       }
@@ -637,7 +775,8 @@ export class VideoCommand extends Command {
     if (closeGameAfterRecording !== undefined) {
       this.closeGameAfterRecording = true;
     }
-    const noCloseGameAfterRecording = values[this.noCloseGameAfterRecordingFlag];
+    const noCloseGameAfterRecording =
+      values[this.noCloseGameAfterRecordingFlag];
     if (noCloseGameAfterRecording !== undefined) {
       this.closeGameAfterRecording = false;
     }
@@ -770,7 +909,9 @@ export class VideoCommand extends Command {
       this.recordAudio = false;
     }
     if (values[this.deathNoticesDurationFlag]) {
-      const deathNoticesDuration = Number(values[this.deathNoticesDurationFlag]);
+      const deathNoticesDuration = Number(
+        values[this.deathNoticesDurationFlag],
+      );
       if (Number.isNaN(deathNoticesDuration)) {
         throw new InvalidArgument('Death notices duration is not a number');
       }
