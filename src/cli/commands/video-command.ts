@@ -347,7 +347,15 @@ export class VideoCommand extends Command {
             showXRay: this.showXRay ?? settings.video.showXRay,
             showAssists: this.showAssists ?? settings.video.showAssists,
             showOnlyDeathNotices: this.showOnlyDeathNotices ?? settings.video.showOnlyDeathNotices,
-            playersOptions: [],
+            playersOptions: [
+              {
+                steamId: player?.steamId ?? '',
+                playerName: player?.name ?? '',
+                isVoiceEnabled: false,
+                highlightKill: true,
+                showKill: true,
+              },
+            ],
             cameras: [],
             recordAudio: this.recordAudio ?? settings.video.recordAudio,
             playerCameras: player
@@ -370,7 +378,15 @@ export class VideoCommand extends Command {
             showXRay: this.showXRay ?? settings.video.showXRay,
             showAssists: this.showAssists ?? settings.video.showAssists,
             showOnlyDeathNotices: this.showOnlyDeathNotices ?? settings.video.showOnlyDeathNotices,
-            playersOptions: [],
+            playersOptions: [
+              {
+                steamId: player?.steamId ?? '',
+                playerName: player?.name ?? '',
+                isVoiceEnabled: false,
+                highlightKill: true,
+                showKill: true,
+              },
+            ],
             cameras: [],
             recordAudio: this.recordAudio ?? settings.video.recordAudio,
             playerCameras: player
