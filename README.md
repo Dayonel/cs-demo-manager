@@ -1,8 +1,15 @@
 # Build FORK Project
 
-Install [Visual Studio Build Tools](https://aka.ms/vs/17/release/vs_BuildTools.exe)
+Install [Visual Studio 2022 Build Tools](https://aka.ms/vs/17/release/vs_BuildTools.exe)
 
 - Desktop development with C++
+
+Download [nvm-windows](https://github.com/coreybutler/nvm-windows/releases)
+
+- [Direct link](https://github.com/coreybutler/nvm-windows/releases/download/1.2.2/nvm-setup.exe)
+- `nvm uninstall 24.14.0`
+- `nvm install 24`
+- `nvm use 24.14.0`
 
 Admin power shell
 
@@ -13,6 +20,10 @@ npm run package:dir
 ```
 
 Find build in: `C:\git\cs-demo-manager\dist\win-unpacked`
+
+Double click `cs-demo-manager.exe`
+
+- Set postgres password
 
 Point to built version
 
@@ -45,6 +56,7 @@ Visual Studio
 - Verify date modified `C:\git\cs-demo-manager\dist\win-unpacked\resources\static\cs2\server.dll`
 
 DEBUG
+
 ```
 const mandatoryCommands = [
   'sv_cheats 1',
