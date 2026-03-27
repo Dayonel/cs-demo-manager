@@ -130,12 +130,6 @@ export async function createCs2VideoJsonFile({
       }
     }
 
-    // Pause the playback for a few seconds to avoid seeing the loading screen/tint effect.
-    // Do it a few ticks before the sequence's start tick because some ticks may be skipped between the time that the
-    // plugin pauses the playback and the time that the game actually pauses the playback (it would result in
-    // startmovie commands not being executed and so missing sequences).
-    json.addPausePlayback(Math.max(1, sequence.startTick - 4));
-
     // Go to 1 tick before the sequence's setup tick to make sure the setup commands are executed.
     // It may not if we do both the skip ahead and the setup cmds at the same tick.
     // Since an October 2025 CS2 update, executing spec_player and demo_gototick on the same tick may cause
