@@ -40,7 +40,7 @@ async function findFilesInSteamFolder(pattern: string) {
     cwd: rootSteamPath,
     absolute: true,
     onlyFiles: true,
-    followSymbolicLinks: false,
+    followSymbolicLinks: true,
   });
 
   return files;
